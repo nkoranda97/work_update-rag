@@ -11,6 +11,7 @@ from app.core.config import settings
 
 SECRET_KEY = settings.secret_key
 
+
 # ────────────── lifespan (startup/shutdown) ────────────── #
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -18,7 +19,7 @@ async def lifespan(app: FastAPI):
     app.state.senders = sorted({r.sender for r in rows if r.sender})
     print(f"[startup] loaded {len(rows)} emails — index ready")
 
-    yield  
+    yield
 
     print("[shutdown] done")
 
@@ -27,7 +28,7 @@ app = FastAPI(
     title="Email‑RAG",
     version="0.5.0",
     docs_url="/docs",
-    lifespan=lifespan,  
+    lifespan=lifespan,
 )
 
 app.add_middleware(

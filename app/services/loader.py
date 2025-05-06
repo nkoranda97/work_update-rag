@@ -21,7 +21,6 @@ def clean(text: str) -> str:
     return " ".join(text.replace("\r", " ").replace("\n", " ").split())
 
 
-
 def load_emails(folder: str | None = None) -> list[EmailRow]:
     """
     Parse all .eml files in *folder* and return a sorted list of EmailRow.

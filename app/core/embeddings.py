@@ -5,7 +5,7 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 from app.core.config import settings
 from app.models.email import EmailRow
-from app.services.loader import load_emails, clean 
+from app.services.loader import load_emails, clean
 
 
 class EmbeddingStore:

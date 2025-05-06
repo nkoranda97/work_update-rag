@@ -1,5 +1,5 @@
 from __future__ import annotations
-from pydantic import BaseModel, Field, RootModel 
+from pydantic import BaseModel, Field, RootModel
 
 
 class QueryReq(BaseModel):
@@ -15,7 +15,7 @@ class QueryRes(BaseModel):
     snippets: list[str]
 
 
-class SenderList(RootModel[list[str]]): 
+class SenderList(RootModel[list[str]]):
     """Schema for /senders endpoint (list of strings)."""
 
     pass
