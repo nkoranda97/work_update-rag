@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Email‑RAG</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:40px;max-width:800px}
+    input,textarea,button,select{font-size:1rem;padding:6px;margin:4px 0;width:100%}
+    textarea{height:120px}
+    .row{display:flex;gap:12px}
+    .row input,.row select{flex:1}
+    #answer{white-space:pre-wrap;border:1px solid #ccc;padding:10px;margin-top:20px}
+    .snip{background:#f6f8fa;border-left:4px solid #999;padding:6px;margin:6px 0;font-size:.9rem}
+    .slider-label{display:flex;justify-content:space-between}
+  </style>
+</head>
+<body>
+<h1>Email‑RAG demo</h1>
+
+<label>Question</label>
+<textarea id="q" placeholder="e.g. Summarize Andy's trimer work in 2020"></textarea>
+
+<div class="row">
+  <div style="flex:1">
+    <label>Sender</label>
+    <select id="senderSel">
+      <option value="">Any sender</option>
+    </select>
+  </div>
+  <div style="width:150px">
+    <label>Start date</label><input id="start" type="date">
+  </div>
+  <div style="width:150px">
+    <label>End date</label><input id="end" type="date">
+  </div>
+</div>
+
+<label class="slider-label">Top‑k results: <span id="kval">10</span></label>
+<input type="range" id="kslider" min="1" max="50" step="1" value="10"
+       oninput="kval.textContent=this.value">
+
+<button onclick="run()">Ask</button>
+
+<h2>Answer</h2><div id="answer"></div>
+<h3>Snippets used</h3><div id="snips"></div>
+
+<script>
+async function loadSenders(){
+  try{
+    const res = await fetch('/senders');
+    if(!res.ok) throw new Error(await res.text());
+    const list = await res.json();
+    const sel  = document.getElementById('senderSel');
+    list.forEach(s=>{
+      const opt=document.createElement('option');
+      opt.value=s; opt.textContent=s;
+      sel.appendChild(opt);
+    });
+  }catch(e){console.error(e);}
+}
+loadSenders();
+
+async function run(){
+  const btn=document.querySelector('button');
+  btn.disabled=true; btn.textContent='Running…';
+  answer.textContent=''; snips.textContent='';
+  try{
+    const sel=document.getElementById('senderSel');
+    const res=await fetch('/query',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        question:q.value,
+        sender: sel.value || null,
+        start:  start.value ? start.value+'T00:00:00+00:00': null,
+        end:    end.value   ? end.value  +'T23:59:59+00:00': null,
+        k:+kslider.value
+      })
+    });
+    if(!res.ok) throw new Error(await res.text());
+    const d=await res.json();
+    answer.textContent=d.answer;
+    snips.innerHTML=d.snippets.map(s=>`<div class="snip">${s}</div>`).join('');
+  }catch(e){alert(e.message||e);}
+  btn.disabled=false; btn.textContent='Ask';
+}
+</script>
+</body>
+</html>

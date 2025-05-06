@@ -1,0 +1,17 @@
+[project]
+name = "workupdate"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "faiss-cpu>=1.11.0",
+    "fastapi[standard]>=0.115.12",
+    "jupyter>=1.1.1",
+    "mail-parser>=4.1.2",
+    "openai>=1.77.0",
+    "pydantic>=2.11.4",
+    "pydantic-settings>=2.9.1",
+    "python-dotenv>=1.1.0",
+    "sentence-transformers>=4.1.0",
+]
