@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Request
+from fastapi import APIRouter, Request, Depends
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
@@ -8,8 +8,10 @@ router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
 
+from app.routers.auth import require_login
+
 @router.get("/", response_class=HTMLResponse)
-async def home(request: Request):
+async def home(request: Request, _: str = Depends(require_login)):
     return templates.TemplateResponse("index.html", {"request": request})
 
 

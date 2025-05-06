@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container" style="max-width:400px;margin-top:80px;">
+    <h2 style="text-align:center;margin-top:0;">Login</h2>
+    <form method="post" style="margin-top:28px;">
+      <label>Username:</label>
+      <input type="text" name="username" required>
+      <label>Password:</label>
+      <input type="password" name="password" required>
+      <button type="submit" style="width:100%;margin-top:10px;">Login</button>
+    </form>
+    {% if error %}
+      <p style='color:red;text-align:center;margin-top:18px;'>{{ error }}</p>
+    {% endif %}
+  </div>
+</body>
+</html>

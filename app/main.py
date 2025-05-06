@@ -1,10 +1,15 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.core.embeddings import store
 from app.routers import query, gui
+from app.routers import auth
+from app.core.config import settings
 
+SECRET_KEY = settings.secret_key
 
 # ────────────── lifespan (startup/shutdown) ────────────── #
 @asynccontextmanager
@@ -31,6 +36,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.add_middleware(SessionMiddleware, secret_key=SECRET_KEY)
 
+# Serve static files
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
+app.include_router(auth.router)
 app.include_router(query.router)
 app.include_router(gui.router)
