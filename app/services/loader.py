@@ -66,3 +66,4 @@ def load_emails(folder: str | None = None) -> list[EmailRow]:
 
     rows.sort(key=lambda r: r.date or "")
     return rows
+

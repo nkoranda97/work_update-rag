@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     login_username: str
     login_password: str
     secret_key: str
+    gmail_username: str
+    gmail_password: str
 
     class Config:
         env_file = ".env"

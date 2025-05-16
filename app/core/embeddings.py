@@ -1,4 +1,3 @@
-# app/core/embeddings.py
 from __future__ import annotations
 import faiss
 import numpy as np
