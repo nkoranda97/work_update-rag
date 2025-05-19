@@ -1,5 +1,3 @@
 # To-Do List
 
-- better formatting of "snippets used" to make emails readable and formatted
-
 - more integrated way of filtering emails by concrete categories such as sender and date
