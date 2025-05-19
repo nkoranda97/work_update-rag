@@ -1,17 +1,5 @@
 # To-Do List
 
-- test if emails can be directly sent to server and integrated in
-    - need to see if I can integrate an email client into the server and see if new emails can be integrated into current emails folder
-    - need to make sure my email parser API will work on emails recieved this way
-
-- if this works, I need to set up a schedule the refresh function to operate sometime at night once a week or so and log wether it was successful
-
-- add a latest update text somewhere on the main page
-
 - better formatting of "snippets used" to make emails readable and formatted
 
 - more integrated way of filtering emails by concrete categories such as sender and date
-
-- add explaination of top-k results 
-
-- add favicon icon 

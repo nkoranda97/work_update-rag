@@ -1,83 +1,59 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Email‑RAG</title>
-  <link rel="stylesheet" href="/static/style.css">
+{% extends "base.html" %}
+{% block title %}Email‑RAG – Search{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-6">Ask your mailbox</h1>
 
-</head>
-<body>
-<div class="container">
-<a href="/logout">Logout</a>
-<h1>Email‑RAG demo</h1>
+<div class="space-y-6">
 
-<label>Question</label>
-<textarea id="q" placeholder="e.g. Summarize Andy's trimer work in 2020"></textarea>
+  <div>
+    <label class="font-medium text-slate-700" for="q">Question</label>
+    <textarea id="q" class="w-full mt-2 p-3 border rounded-md focus:ring-2 focus:ring-blue-400" rows="4"
+              placeholder="e.g. Summarize Andy's trimer work in 2020"></textarea>
+  </div>
 
-<div class="row">
-  <div style="flex:1">
-    <label>Sender</label>
-    <select id="senderSel">
-      <option value="">Any sender</option>
-    </select>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div>
+      <label class="font-medium text-slate-700" for="senderSel">Sender</label>
+      <select id="senderSel" class="w-full mt-2 p-2 border rounded-md">
+        <option value="">Any sender</option>
+      </select>
+    </div>
+    <div>
+      <label class="font-medium text-slate-700" for="start">Start date</label>
+      <input id="start" type="date" class="w-full mt-2 p-2 border rounded-md">
+    </div>
+    <div>
+      <label class="font-medium text-slate-700" for="end">End date</label>
+      <input id="end" type="date" class="w-full mt-2 p-2 border rounded-md">
+    </div>
   </div>
-  <div style="width:150px">
-    <label>Start date</label><input id="start" type="date">
+
+  <div>
+    <label class="font-medium text-slate-700 flex items-center space-x-2" for="kslider">
+      <span>Top‑k results:</span>
+      <span id="kval" class="font-semibold">10</span>
+    </label>
+    <input type="range" id="kslider" min="1" max="50" step="1" value="10"
+           oninput="kval.textContent=this.value"
+           class="w-full mt-2 accent-blue-600">
   </div>
-  <div style="width:150px">
-    <label>End date</label><input id="end" type="date">
+
+  <button onclick="run()"
+          class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition disabled:opacity-50">
+    Ask
+  </button>
+
+  <div>
+    <h2 class="text-xl font-semibold mt-6 mb-3">Answer</h2>
+    <div id="answer" class="whitespace-pre-line border p-4 rounded-md bg-slate-100 min-h-[3rem]"></div>
   </div>
+
+  <div>
+    <h3 class="text-lg font-semibold mt-6 mb-3">Snippets used</h3>
+    <div id="snips" class="space-y-4"></div>
+  </div>
+
 </div>
 
-<label class="slider-label">Top‑k results: <span id="kval">10</span></label>
-<input type="range" id="kslider" min="1" max="50" step="1" value="10"
-       oninput="kval.textContent=this.value">
-
-<button onclick="run()">Ask</button>
-
-<h2>Answer</h2><div id="answer"></div>
-<h3>Snippets used</h3><div id="snips"></div>
-
-<script>
-async function loadSenders(){
-  try{
-    const res = await fetch('/senders');
-    if(!res.ok) throw new Error(await res.text());
-    const list = await res.json();
-    const sel  = document.getElementById('senderSel');
-    list.forEach(s=>{
-      const opt=document.createElement('option');
-      opt.value=s; opt.textContent=s;
-      sel.appendChild(opt);
-    });
-  }catch(e){console.error(e);}
-}
-loadSenders();
-
-async function run(){
-  const btn=document.querySelector('button');
-  btn.disabled=true; btn.textContent='Running…';
-  answer.textContent=''; snips.textContent='';
-  try{
-    const sel=document.getElementById('senderSel');
-    const res=await fetch('/query',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        question:q.value,
-        sender: sel.value || null,
-        start:  start.value ? start.value+'T00:00:00+00:00': null,
-        end:    end.value   ? end.value  +'T23:59:59+00:00': null,
-        k:+kslider.value
-      })
-    });
-    if(!res.ok) throw new Error(await res.text());
-    const d=await res.json();
-    answer.textContent=d.answer;
-    snips.innerHTML=d.snippets.map(s=>`<div class="snip">${s}</div>`).join('');
-  }catch(e){alert(e.message||e);}
-  btn.disabled=false; btn.textContent='Ask';
-}
-</script>
-</body>
-</html>
+<script src="/static/app.js"></script>
+{% endblock %}

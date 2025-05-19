@@ -16,6 +16,11 @@ async def home(request: Request, _: str = Depends(require_login)):
     return templates.TemplateResponse("index.html", {"request": request})
 
 
+@router.get("/about", response_class=HTMLResponse)
+async def about(request: Request, _: str = Depends(require_login)):
+    return templates.TemplateResponse("about.html", {"request": request})
+
+
 @router.get("/senders", response_model=list[str])
 async def list_senders():
     """Return unique senders for the dropdown."""

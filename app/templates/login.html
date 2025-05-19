@@ -1,22 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Login</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-  <div class="container" style="max-width:400px;margin-top:80px;">
-    <h2 style="text-align:center;margin-top:0;">Login</h2>
-    <form method="post" style="margin-top:28px;">
-      <label>Username:</label>
-      <input type="text" name="username" required>
-      <label>Password:</label>
-      <input type="password" name="password" required>
-      <button type="submit" style="width:100%;margin-top:10px;">Login</button>
-    </form>
-    {% if error %}
-      <p style='color:red;text-align:center;margin-top:18px;'>{{ error }}</p>
-    {% endif %}
-  </div>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block nav %}{% endblock %} {# hide nav on login #}
+{% block content %}
+<div class="max-w-md mx-auto">
+  <h2 class="text-center text-2xl font-semibold mb-6">Login</h2>
+  <form method="post" class="space-y-4">
+    <div>
+      <label class="font-medium text-slate-700" for="username">Username</label>
+      <input id="username" name="username" type="text" required
+             class="w-full mt-2 p-2 border rounded-md">
+    </div>
+    <div>
+      <label class="font-medium text-slate-700" for="password">Password</label>
+      <input id="password" name="password" type="password" required
+             class="w-full mt-2 p-2 border rounded-md">
+    </div>
+    <button type="submit"
+            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium px-6 py-2 rounded-md transition">
+      Login
+    </button>
+  </form>
+  {% if error %}
+    <p class="text-red-600 text-center mt-4">{{ error }}</p>
+  {% endif %}
+</div>
+{% endblock %}

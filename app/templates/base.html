@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Email‑RAG{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📧</text></svg>">
+  <script src="https://cdn.tailwindcss.com"></script>
+  {% block head %}{% endblock %}
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+  {% block nav %}
+  <nav class="bg-white border-b border-slate-200 shadow-sm py-3">
+    <div class="container mx-auto px-4 flex justify-between items-center">
+      <a href="/" class="text-xl font-semibold tracking-tight text-slate-700">Email‑RAG</a>
+      <div class="space-x-4">
+        <a href="/about" class="text-slate-600 hover:text-blue-600 transition">About</a>
+        <a href="/logout" class="text-slate-600 hover:text-blue-600 transition">Logout</a>
+      </div>
+    </div>
+  </nav>
+  {% endblock %}
+
+  <main class="flex-grow container mx-auto px-4 py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="text-center text-sm text-slate-500 py-6">
+  </footer>
+</body>
+</html>

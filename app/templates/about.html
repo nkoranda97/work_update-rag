@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}About Email‑RAG{% endblock %}
+{% block content %}
+<h1 class="text-2xl font-semibold mb-6">About Email‑RAG</h1>
+
+<section class="space-y-6">
+  <div>
+    <h2 class="text-xl font-semibold mb-2">How It Works</h2>
+    <p>Email‑RAG is a powerful tool that helps you search and analyze your email content using <strong class="text-blue-700">retrieval‑augmented generation (RAG)</strong>. It blends vector search with generative AI to surface the most relevant snippets and craft concise answers.</p>
+  </div>
+
+  <div>
+    <h2 class="text-xl font-semibold mb-2">Using the Search Interface</h2>
+
+    <h3 class="font-medium mt-4">Question input</h3>
+    <p>Enter your question in the text area. Be specific about what you're looking for—for example:</p>
+    <ul class="list-disc list-inside">
+      <li>"Summarize Andy's trimer work in 2020"</li>
+      <li>"What were the key points from the last team meeting?"</li>
+      <li>"Find all discussions about project deadlines"</li>
+    </ul>
+
+    <h3 class="font-medium mt-4">Filters</h3>
+    <ul class="list-disc list-inside">
+      <li><strong>Sender:</strong> Filter results to specific email senders</li>
+      <li><strong>Date range:</strong> Limit results to a specific time period</li>
+    </ul>
+
+    <h3 class="font-medium mt-4">Top‑k results slider</h3>
+    <p>The <em>k</em> slider controls how many email snippets are considered:</p>
+    <ul class="list-disc list-inside">
+      <li><strong>Lower values (1‑10):</strong> Precise, focused answers</li>
+      <li><strong>Higher values (11‑50):</strong> Broader coverage for complex topics</li>
+    </ul>
+  </div>
+
+  <div>
+    <h2 class="text-xl font-semibold mb-2">Tips for better results</h2>
+    <ul class="list-disc list-inside">
+      <li>Be specific in your questions</li>
+      <li>Use filters when you know the context</li>
+      <li>Start with a lower <em>k</em> value and increase if you need more context</li>
+      <li>Review the snippets to understand how the answer was generated</li>
+    </ul>
+  </div>
+</section>
+{% endblock %}
